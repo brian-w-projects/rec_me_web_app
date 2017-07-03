@@ -1,0 +1,55 @@
+{% macro render_recs(to_display, moment) %}
+  <div class="container rec-container">
+    <div class="row col-xs-offset-1 col-md-offset-0">
+      {% for rec in to_display %}
+        <div id="{{ rec['id'] }}" class="single-rec col-xs-10 col-md-6 col-lg-4">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <div class="panel-title">
+                {{ rec['title'] }}
+              </div>
+              <span class="small text-uppercase"><span class="glyphicon glyphicon-user"></span> {{ rec['author'] }}</span>
+              <span class="date">{{ moment(rec['timestamp']).fromNow() }} <span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <div class="panel-text">
+                {{ rec['text'] }}
+            </div>
+            <a>
+              <div class="panel-footer">
+                <span class="badge">
+                  <span class="badge-value">
+                    {{ rec['comment_count'] }}
+                  </span>
+                  <span class="glyphicon glyphicon-comment"></span></span>
+              </div>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro render_comments(to_display, moment) %}
+  <div class="container-fluid comment-container">
+    <div class="row col-xs-offset-1">
+      {% for comment in to_display %}
+        {{ render_comment(comment, moment) }}
+      {% endfor %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro render_comment(comment, moment) %}
+  <div class="single-comment col-xs-10">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <span class="small text-uppercase"><span class="glyphicon glyphicon-user"></span> {{ comment['author_username'] }}</span>
+        <span class="date">{{ moment(comment['timestamp']).fromNow() }} <span class="glyphicon glyphicon-calendar"></span></span>
+      </div>
+      <div class="panel-text">
+        {{ comment['text'] }}
+      </div>
+    </div>
+  </div>
+{% endmacro %}

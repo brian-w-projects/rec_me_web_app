@@ -1,0 +1,56 @@
+{% import 'macros/navbar.html' as navbar %}
+{% import 'macros/modals.html' as modals %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recommend Me App</title>
+  <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/main/index.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='fontawesome/css/font-awesome.min.css') }}" rel="stylesheet">
+</head>
+<body>
+  {{ navbar.build() }}
+  {{ modals.login(login_form) }}
+  {{ modals.post(post_form) }}
+  {{ modals.comment(comment_form) }}
+  <div class="container-fluid">
+    <div class="col-xs-12">
+        <h1 class="welcome">Hello {{ session['user'] }}</h1>
+    </div>
+  </div>
+
+
+  <div id='insert-point' class="container-fluid">
+    <div class="col-xs-6 col-xs-offset-3">
+      <button id='load-button' class="btn btn-info btn-block" disabled>
+        <span id='load-icon'>
+          <i class="fa fa-spinner fa-pulse fa3x"></i>
+        </span>
+        <span class="load-text">Load More</span>
+      </button>
+    </div>
+  </div>
+  <script>
+    loginUrl = "{{ url_for('main.login') }}";
+    logoutUrl = "{{ url_for('main.logout') }}";
+    recUrl = "{{ url_for('main.recs_async') }}";
+    postUrl = "{{ url_for('main.post_recs') }}";
+    searchUrl = "{{ url_for('main.recs_async_begin') }}";
+    commentUrl = "{{ url_for('main.comments_get') }}";
+    postCommentUrl = "{{ url_for('main.post_comments') }}";
+    id = "{{ id }}";
+    user = "{{ session['user'] }}";
+  </script>
+  {{ moment.include_jquery() }}
+  {{ moment.include_moment() }}
+  <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main/login.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main/post.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main/navigate.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main/ajaxCalls.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main/comment.js') }}"></script>
+</body>
+</html>

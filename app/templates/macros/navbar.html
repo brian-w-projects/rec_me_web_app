@@ -1,0 +1,30 @@
+{% macro build() %}
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse" data-target="#collapsedNav">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <p class="navbar-brand">Rec Me App</p>
+      </div>
+      <div class="collapse navbar-collapse" id="collapsedNav">
+        <ul class="nav navbar-nav">
+          <li id='home-link' class="active"><a href="#">Home</a></li>
+          <li id="post-link"><a href="#">Post</a></li>
+          <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+        </ul>
+        <form id='search-form' class="navbar-form navbar-right" role="search">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+              <input id='search-bar' class="form-control" placeholder="Search")/>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+{% endmacro %}
