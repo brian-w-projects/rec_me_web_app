@@ -5,7 +5,7 @@
         <div id="{{ rec['id'] }}" class="single-rec col-xs-10 col-md-6 col-lg-4">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <div class="panel-title">
+              <div class="panel-title lead">
                 {{ rec['title'] }}
               </div>
               <span class="small text-uppercase"><span class="glyphicon glyphicon-user"></span> {{ rec['author'] }}</span>
@@ -25,6 +25,12 @@
             </a>
           </div>
         </div>
+        {%  if loop.index % 2 == 0 %}
+          <div class="clearfix visible-md-block"></div>
+        {% endif %}
+        {% if loop.index % 3 == 0 %}
+          <div class="clearfix visible-lg-block"></div>
+        {% endif %}
       {% endfor %}
     </div>
   </div>

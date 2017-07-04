@@ -19,7 +19,7 @@ def recs_async():
         return jsonify({'status': 'EMPTY'})
     for ele in to_process:
         ele['timestamp'] = datetime.strptime(ele['timestamp'], '%a, %d %b %Y %X %Z')
-    to_return = get_template_attribute('macros/render_recs.html', 'render_recs')
+    to_return = get_template_attribute('macros/render.html', 'render_recs')
     return jsonify({'status': 'SUCCESS', 'inject': to_return(to_process, _moment)})
 
 
@@ -44,7 +44,7 @@ def comments_get():
         r = requests.get('https://rec-me.herokuapp.com/api1/recs/'+str(id)+'/comments/'+str(1),
                         auth=(redis_store.get(session['user']),''))
         if r.status_code == 200:
-            to_return = get_template_attribute('macros/render_recs.html', 'render_comments')
+            to_return = get_template_attribute('macros/render.html', 'render_comments')
             if not r.json().values():
                 return jsonify({'status': 'EMPTY'})
             to_process = r.json().values()
@@ -63,7 +63,7 @@ def post_comments():
         text = comment_form.comment_text.data
         id = comment_form.comment_id.data
         celery_post_comments.apply_async([redis_store.get(session['user']), text, id])
-        to_return = get_template_attribute('macros/render_recs.html', 'render_comment')
+        to_return = get_template_attribute('macros/render.html', 'render_comment')
         to_render = {'author_username': session['user'], 'text': text, 'timestamp': datetime.utcnow()}
         return jsonify({'status': 'SUCCESS', 'inject': to_return(to_render, _moment), 'id': id})
     return jsonify({'status': 'FAILURE'})
@@ -109,4 +109,4 @@ def index():
     comment_form = CommentForm(request.form)
     id = recs_async_begin(user=session['user']) if 'user' in session else -1
     return render_template('main/index.html', login_form=login_form, post_form=post_form,
-                           comment_form=comment_form, id=id or -1)
+                           comment_form=comment_form, id=id)

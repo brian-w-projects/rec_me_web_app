@@ -7,9 +7,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Recommend Me App</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}"/>
   <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/main/index.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='fontawesome/css/font-awesome.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/main/index.less')}}" type="text/css" rel="stylesheet/less"/>
 </head>
 <body>
   {{ navbar.build() }}
@@ -52,5 +53,6 @@
   <script src="{{ url_for('static', filename='js/main/navigate.js') }}"></script>
   <script src="{{ url_for('static', filename='js/main/ajaxCalls.js') }}"></script>
   <script src="{{ url_for('static', filename='js/main/comment.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/less/less.min.js') }}" type="text/javascript"></script>
 </body>
 </html>

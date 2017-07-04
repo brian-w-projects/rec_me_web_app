@@ -1,0 +1,106 @@
+@color-primary-0: #6F41AF;	/* Main Primary color */
+@color-primary-1: #BBA3DD;
+@color-primary-2: #8E67C3;
+@color-primary-3: #5A21A9;
+@color-primary-4: #410C8C;
+
+@color-secondary-1-0: #FFAE50;	/* Main Secondary color (1) */
+@color-secondary-1-1: #FFDDB6;
+@color-secondary-1-2: #FFC27C;
+@color-secondary-1-3: #F8931E;
+@color-secondary-1-4: #CE6E00;
+
+@color-secondary-2-0: #3981A3;	/* Main Secondary color (2) */
+@color-secondary-2-1: #9DC5D8;
+@color-secondary-2-2: #5F9DBA;
+@color-secondary-2-3: #1A729D;
+@color-secondary-2-4: #065A82;
+
+@color-complement-0: #FFEE50;	/* Main Complement color */
+@color-complement-1: #FFF8B6;
+@color-complement-2: #FFF27C;
+@color-complement-3: #F8E31E;
+@color-complement-4: #CEBA00;
+
+body{
+    padding-top: 75px;
+    background-color: @color-secondary-2-1;
+}
+
+.navbar-default{
+  background-color: lighten(@color-secondary-2-1, 10%);
+}
+
+.navbar-nav>li:hover, .input-group-addon-color{
+  background-color: @color-primary-1;
+}
+
+.modal-body, .button-div{
+    overflow: hidden;
+}
+
+.alert{
+    visibility: hidden;
+}
+
+.welcome{
+    text-align: center;
+}
+
+.load-text, #comment_id{
+    display: none;
+}
+
+.navbar-brand{
+    margin-bottom: 0px;
+}
+
+#post_text, #comment_text{
+    resize: none;
+    height: 100px;
+}
+
+#title-count, #text-count, #comment-count, .date{
+    float: right;
+}
+
+.panel-primary{
+  background-color: @color-secondary-2-3;
+
+  .panel-heading{
+    background-color: darken(@color-secondary-1-0, 10%);
+  }
+
+  .panel-footer{
+    cursor: pointer;
+
+    &:hover{
+      background-color: @color-primary-1;
+    }
+  }
+
+  .panel-text{
+    padding: 10px;
+    background-color: #efefef;
+  }
+
+  .panel-title{
+    padding-bottom: 5px;
+  }
+}
+
+.btn-info, .btn-primary {
+  .clicked(@color-primary-0, @color-primary-4);
+
+  &:hover, &.active, &[disabled]{
+    .clicked
+  }
+}
+
+.clicked(@top: @color-primary-4, @bottom: @color-primary-0){
+  background: -webkit-gradient(linear, left top, left bottom, from(@top), to(@bottom));
+  background: -moz-linear-gradient(top, @top, @bottom);
+  background: -o-linear-gradient(top, @top, @bottom);
+  background: -ms-linear-gradient(top, @top, @bottom);
+
+}

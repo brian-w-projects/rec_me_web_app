@@ -6,6 +6,7 @@ $(function(){
     var $login = $('#login');
     var $form = $('form');
     var $alert = $('.alert');
+    var $welcome = $('.welcome');
 
 
     //tooltip
@@ -40,6 +41,7 @@ $(function(){
                $login.addClass('btn-success').removeClass('btn-default').text('Success');
                setTimeout(function(){
                    $loginModal.modal('hide');
+                   $welcome.text('Hello ' + $username.val());
                    retrieveRecs(e['id']);
                }, 1000);
            }

@@ -16,12 +16,18 @@ $(function(){
 
     //scroll load
     $(window).off('scroll', scrollHandler).on('scroll', scrollHandler);
-    $loadButton.on('click', loadRecs);
+    $loadButton.on('click', function(){
+        if($searchBar.val().length > 0){
+            loadRecs({'page': 1, 'term': $searchBar.val()});
+        }else {
+            loadRecs({'page': page, 'user': user});
+        }
+    });
 
     //navbar
     $(document).click(function(e){
         var clickOver = $(e.target);
-        if($navbarCollapse.hasClass('in') && !clickOver.hasClass('navbar-toggle') && !clickOver.hasClass('search-bar'))
+        if($navbarCollapse.hasClass('in') && !clickOver.hasClass('navbar-toggle') && !clickOver.is('#search-bar'))
             $navbarCollapse.collapse('hide');
     });
 
@@ -45,9 +51,15 @@ $(function(){
             retrieveRecs(id);
         }, 1000);
 
+    $searchBar.on('focus', function(){
+       $(this).prev().addClass('input-group-addon-color');
+    }).on('blur', function(){
+        $(this).prev().removeClass('input-group-addon-color');
+    });
 
     $searchForm.on('submit', function(e){
         e.preventDefault();
+        $navbarCollapse.collapse('hide');
         $('.rec-container').remove();
         $insertPoint.show();
         loadRecs({'page': 1, 'term': $searchBar.val()});
