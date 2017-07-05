@@ -18,6 +18,6 @@ def make_celery(app):
 
     return celery
 
-flask_app = create_app('development')
-# flask_app = create_app('deployment')
+# flask_app = create_app('development')
+flask_app = create_app('deployment')
 celery = make_celery(flask_app)

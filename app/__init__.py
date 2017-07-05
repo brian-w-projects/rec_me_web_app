@@ -20,7 +20,7 @@ def create_app(config_name):
     redis_store.init_app(app)
     celery.init_app(app)
 
-    # sslify = SSLify(app)
+    sslify = SSLify(app)
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
