@@ -1,5 +1,7 @@
 from app import create_app
 from celery import Celery
+import os
+
 
 def make_celery(app):
     celery = Celery(app.import_name, backend=app.config['CELERY_RESULT_BACKEND'], broker=app.config['CELERY_BROKER_URL'])
@@ -18,6 +20,5 @@ def make_celery(app):
 
     return celery
 
-# flask_app = create_app('development')
-flask_app = create_app('deployment')
+flask_app = create_app(os.environ.get('CONFIG') or 'development')
 celery = make_celery(flask_app)

@@ -6,7 +6,6 @@ from ..tasks import celery_render_recs, celery_post_recs, celery_post_comments
 import requests
 from datetime import datetime
 from flask_moment import _moment
-import json
 
 
 @main.route('/recs_async')
@@ -16,7 +15,7 @@ def recs_async():
     if task.state != 'SUCCESS':
         return jsonify({'status': 'PROGRESS'})
     to_process = task.get()
-    if to_process is None:
+    if not to_process:
         return jsonify({'status': 'EMPTY'})
     for ele in to_process:
         ele['timestamp'] = datetime.strptime(ele['timestamp'], '%a, %d %b %Y %X %Z')

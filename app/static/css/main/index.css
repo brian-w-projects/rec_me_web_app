@@ -46,6 +46,7 @@ body {
 }
 .panel-primary .panel-heading {
   background-color: #ff961d;
+  overflow: hidden;
 }
 .panel-primary .panel-footer {
   cursor: pointer;
