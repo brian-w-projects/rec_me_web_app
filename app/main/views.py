@@ -6,6 +6,7 @@ from ..tasks import celery_render_recs, celery_post_recs, celery_post_comments
 import requests
 from datetime import datetime
 from flask_moment import _moment
+import json
 
 
 @main.route('/recs_async')
@@ -30,7 +31,7 @@ def recs_async_begin(page='', term='', user=''):
         term = term or str(request.args.get('term', ''))
         user = user or str(request.args.get('user', ''))
         params = {'user': user, 'term': term}
-        task = celery_render_recs.apply_async([redis_store.get(session['user']), page, params])
+        task = celery_render_recs.apply_async([redis_store.get(session['user']).decode('utf-8'), page, params])
         return task.id
     else:
         return -1
@@ -42,7 +43,7 @@ def comments_get():
         id = str(request.args.get('id'))
         session['id'] = id
         r = requests.get('https://rec-me.herokuapp.com/api1/recs/'+str(id)+'/comments/'+str(1),
-                        auth=(redis_store.get(session['user']),''))
+                        auth=(redis_store.get(session['user']).decode('utf-8'),''))
         if r.status_code == 200:
             to_return = get_template_attribute('macros/render.html', 'render_comments')
             if not r.json().values():
@@ -62,7 +63,7 @@ def post_comments():
     if comment_form.validate():
         text = comment_form.comment_text.data
         id = comment_form.comment_id.data
-        celery_post_comments.apply_async([redis_store.get(session['user']), text, id])
+        celery_post_comments.apply_async([redis_store.get(session['user']).decode('utf-8'), text, id])
         to_return = get_template_attribute('macros/render.html', 'render_comment')
         to_render = {'author_username': session['user'], 'text': text, 'timestamp': datetime.utcnow()}
         return jsonify({'status': 'SUCCESS', 'inject': to_return(to_render, _moment), 'id': id})
@@ -76,7 +77,7 @@ def post_recs():
         title = post_form.post_title.data
         text = post_form.post_text.data
         public = 'True' if post_form.post_public.data else 'False'
-        celery_post_recs.apply_async([redis_store.get(session['user']), title, text, public])
+        celery_post_recs.apply_async([redis_store.get(session['user']).decode('utf-8'), title, text, public])
         return jsonify({'status': 'SUCCESS'})
     return jsonify({'status': 'FAILURE'})
 
@@ -99,7 +100,7 @@ def login():
         if r.status_code == 200:
             session['user'] = user
             redis_store.set(user, r.json()['token'], 3600)
-            return jsonify({'status': 'SUCCESS', 'id': recs_async_begin(user=user).decode('utf-8')})
+            return jsonify({'status': 'SUCCESS', 'id': recs_async_begin(user=user)})
     return jsonify({'status': 'FAILURE'})
 
 

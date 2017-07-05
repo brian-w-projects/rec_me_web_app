@@ -15,14 +15,14 @@ class DevelopmentConfig(Config):
     CELERY_RESULT_BACKEND = 'redis://:@localhost:6379/1'
 
 
-class DeploymentConfig(Config):
-    SECRET_KEY = os.environ['SECRET_KEY']
-    REDIS_URL = os.environ['REDIS_URL']
-    CELERY_BROKER_URL = os.environ['REDIS_URL']
-    CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
+# class DeploymentConfig(Config):
+#     SECRET_KEY = os.environ['SECRET_KEY']
+#     REDIS_URL = os.environ['REDIS_URL']
+#     CELERY_BROKER_URL = os.environ['REDIS_URL']
+#     CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
 
 
 config = {
-    'development': DevelopmentConfig,
-    'deployment': DeploymentConfig
+    'development': DevelopmentConfig
+    # 'deployment': DeploymentConfig
 }
