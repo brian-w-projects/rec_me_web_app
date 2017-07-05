@@ -3,8 +3,8 @@ from flask import request
 from app import create_app
 import os
 
-app = create_app('development')
-# app = create_app('deployment')
+# app = create_app('development')
+app = create_app('deployment')
 
 @app.url_defaults
 def hashed_static_file(endpoint, values):
