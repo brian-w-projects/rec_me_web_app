@@ -1,13 +1,13 @@
 from flask import Flask
 from flask_moment import Moment
-from flask_redis import FlaskRedis
+from flask_redis import Redis
 from flask_celery import Celery
 from flask_sslify import SSLify
 
 from config import config
 
 moment = Moment()
-redis_store = FlaskRedis()
+redis_store = Redis()
 celery = Celery()
 
 
