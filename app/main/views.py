@@ -68,6 +68,7 @@ def post_comments():
         return jsonify({'status': 'SUCCESS', 'inject': to_return(to_render, _moment), 'id': id})
     return jsonify({'status': 'FAILURE'})
 
+
 @main.route('/post_recs', methods=['POST'])
 def post_recs():
     post_form = PostForm(request.form)
@@ -98,7 +99,7 @@ def login():
         if r.status_code == 200:
             session['user'] = user
             redis_store.set(user, r.json()['token'], 3600)
-            return jsonify({'status': 'SUCCESS', 'id': recs_async_begin(user=user)})
+            return jsonify({'status': 'SUCCESS', 'id': recs_async_begin(user=user).decode('utf-8')})
     return jsonify({'status': 'FAILURE'})
 
 
