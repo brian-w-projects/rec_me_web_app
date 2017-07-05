@@ -93,7 +93,7 @@ def logout():
 def login():
     login_form = LoginForm(request.form)
     if login_form.validate():
-        user = login_form.username.data
+        user = login_form.username.data.lower()
         password = login_form.password.data
         r = requests.get('https://rec-me.herokuapp.com/api1/token/new', auth=(user, password))
         if r.status_code == 200:
